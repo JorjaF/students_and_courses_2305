@@ -31,9 +31,9 @@ class Gradebook
   def all_grades
     grades = {}
     @courses.each do |course|
-      grades[course] = course.students.map { |student| student.grade }
+      grades[course] = course.students.map { |student| student.scores }
     end
-    grades
+    grades.transform_values { |scores| scores.flatten }
   end
     
 end
