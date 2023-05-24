@@ -35,7 +35,3 @@ RSpec.describe Student do
     expect(student.grade).to eq(83.5)
   end
 end
-
-
-# pry(main)> student.grade #Average of all the scores
-# # => 83.5
