@@ -36,4 +36,11 @@ class Gradebook
     grades.transform_values { |scores| scores.flatten }
   end
     
+  def students_in_range(range)
+    students = []
+    @courses.each do |course|
+      course.students.each do |student|
+        students << student if range.include?(student.grade)
+      end
+  end
 end

@@ -83,9 +83,34 @@ RSpec.describe Gradebook do
     student4.log_score(89)
 
     expect(gradebook.all_grades).to eq({gradebook.courses[0] => [89, 78, 59, 79], gradebook.courses[1] => [99, 100, 72, 89]})
-    
   end
 
+  it "can list all students in a range" do
+    gradebook = Gradebook.new("Ron")
+    gradebook.add_course(Course.new("Calculus", 2))
+    gradebook.add_course(Course.new("Chemistry", 2))
+
+    student1 = Student.new({name: "Morgan", age: 21})
+    student2 = Student.new({name: "Jordan", age: 29})
+    student3 = Student.new({name: "Eric", age: 4})
+    student4 = Student.new({name: "Sarah", age: 20})
+
+    gradebook.courses[0].enroll(student1)
+    gradebook.courses[0].enroll(student2)
+    gradebook.courses[1].enroll(student3)
+    gradebook.courses[1].enroll(student4)
+
+    student1.log_score(89)
+    student1.log_score(78)
+    student2.log_score(59)
+    student2.log_score(79)
+    student3.log_score(99)
+    student3.log_score(100)
+    student4.log_score(72)
+    student4.log_score(89)
+
+    expect(gradebook.students_in_range(70, 80)).to eq([student1, student4])
+  end
 end
 
 # The University of Denver would like you to implement additional functionality. They would like to be able to track all the grades across all courses. They would also like to be able to find all students across all courses that have a grade in a given range.
