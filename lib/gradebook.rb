@@ -27,5 +27,13 @@ class Gradebook
     end
     students
   end
+
+  def all_grades
+    grades = {}
+    @courses.each do |course|
+      grades[course] = course.students.map { |student| student.grade }
+    end
+    grades
+  end
     
 end

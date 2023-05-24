@@ -56,19 +56,40 @@ RSpec.describe Gradebook do
     student2.log_score(79)
 
     expect(gradebook.students_below(80)).to eq([student2])
-
   end
+
+  it "can list all grades for all courses" do
+    gradebook = Gradebook.new("Ron")
+    gradebook.add_course(Course.new("Calculus", 2))
+    gradebook.add_course(Course.new("Chemistry", 2))
+
+    student1 = Student.new({name: "Morgan", age: 21})
+    student2 = Student.new({name: "Jordan", age: 29})
+    student3 = Student.new({name: "Eric", age: 4})
+    student4 = Student.new({name: "Sarah", age: 20})
+
+    gradebook.courses[0].enroll(student1)
+    gradebook.courses[0].enroll(student2)
+    gradebook.courses[1].enroll(student3)
+    gradebook.courses[1].enroll(student4)
+
+    student1.log_score(89)
+    student1.log_score(78)
+    student2.log_score(59)
+    student2.log_score(79)
+    student3.log_score(99)
+    student3.log_score(100)
+    student4.log_score(72)
+    student4.log_score(89)
+
+    expect(gradebook.all_grades).to eq({gradebook.courses[0] => [89, 78, 59, 79], gradebook.courses[1] => [99, 100, 72, 89]})
+    
+  end
+
 end
 
-# You have been contracted by the University of Denver to write a program that models gradebooks for its courses. Use TDD to implement the following features:
+# The University of Denver would like you to implement additional functionality. They would like to be able to track all the grades across all courses. They would also like to be able to find all students across all courses that have a grade in a given range.
 
-# Create a Gradebook class. Each gradebook has an instructor, as well as a way to read that data.
-# Each gradebook has courses, as well as a way to read that data.
-# A gradebook can list_all_students in its courses.
-# A gradebook can students_below(threwhold) to return a list of students whose grades are below a given threshold.
 # Method Name	Return Value (type)
-# instructor	String
-# courses	Array of Course objects
-# add_course(course)	Array of Course objects including the new one just added.
-# list_all_students	Hash where the key is a Course object and the value is an Array of Student objects
-# students_below(threshold)	Array of Student objects
+# all_grades	Hash where the key is a Course object and the value is an Array of all the grades for that course.
+# students_in_range(min, max)	Array of Student objects
